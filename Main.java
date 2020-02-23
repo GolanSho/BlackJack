@@ -56,8 +56,7 @@ public class Main {
             int ace = 11;
             boolean gotAce = false;
             boolean dgotAce = false;
-
-            
+  
             String answer = "";
             String endline = "===============\n===============";
 
@@ -121,12 +120,17 @@ public class Main {
                 System.out.println(endline);
                 continue;
             }
+            else if (hand > 21) 
+                hand -= 10;
             if (dealerHand == 21){
                 System.out.println("Dealer got BlackJack!");
                 newgame();
                 System.out.println(endline);
                 continue;
             }
+            else if (dealerHand > 21)
+                dealerHand -= 10;
+            
             int playerDraw = 0;
             int dealerDraw = 0;
             
@@ -155,6 +159,7 @@ public class Main {
                     if (playerDraw == 1){
                         if (hand + 11 < 22)
                             playerDraw = ace;
+                            gotAce = true;
                     }
                     hand += playerDraw;
                     draw += 1 ;
@@ -189,6 +194,7 @@ public class Main {
                 if (dealerDraw == 1){
                     if (hand + 11 < 22)
                         dealerDraw = ace;
+                        dgotAce = true;
                 }
                 dealerHand += dealerDraw;
                 draw += 1;
@@ -198,14 +204,14 @@ public class Main {
             if (dealerHand > 21){
                 System.out.println("Dealer lost");
             }
-            if (hand > dealerHand) {
+            else if (hand > dealerHand) {
                 System.out.println("Win");
             }
             else if (hand == dealerHand)
                 System.out.println("Draw");
             else if (hand < dealerHand)
                 System.out.println("Lose");
-            
+            newgame();
             System.out.println(endline);
         }
     }
