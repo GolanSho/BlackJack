@@ -31,6 +31,10 @@ public class Blackjack {
                 deck.add(i + 1);
             }   
         }
+        for (int i = 0; i < 4; i++){
+            Collections.shuffle(deck);
+        }
+        
         return deck;
     }
 
@@ -97,13 +101,6 @@ public class Blackjack {
         return num;
     }
 
-    public List<Integer> deckShuffle(List<Integer> deckToShuffle){
-        for (int i = 0; i < 4; i++){
-            Collections.shuffle(deckToShuffle);
-        }
-        return deckToShuffle;
-    }
-
     public int[] deal(List<Integer> shuffeldDeck){
         
         int [] hand = new int[10];
@@ -152,4 +149,32 @@ public class Blackjack {
         }
         return hand;
     }
+
+    public int dealerDraw(int hand, List<Integer> deck){
+        while (hand < MAX_SCORE && hand <= 16){
+            hand += trueValue(deck.get(cardPosition));
+            System.out.println("Dealer got " + cardConvert(deck.get(cardPosition)));
+            if (hand > MAX_SCORE){
+                if (gotAce){
+                    hand -= 10;
+                    gotAce = false;
+                }
+                else {
+                    System.out.println("Dealer got more then 21...You Win!");
+                    System.exit(0);
+                }
+            }
+            raiseCardPosition(1);
+        }
+        System.out.println("Dealer now have: " + hand);
+        return hand;
+    }
+
+    public void finalPhase(int h1, int h2){
+        if (h1 > h2)
+            System.out.println("You Win!");
+        else if (h1 == h2)
+            System.out.println("You Draw..");
+        else System.out.println("You Lost..");
+    }   
 }
